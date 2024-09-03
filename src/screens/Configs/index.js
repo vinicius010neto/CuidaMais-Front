@@ -2,11 +2,11 @@ import React from 'react';
 import Footer from '../../components/footer';
 import { View, Text } from 'react-native';
 
-export default function AppointmentsScreen() {
+export default function ConfigsScreen() {
   return (
     <>
     <View>
-        <Text>teste</Text>
+        <Text>CONFIIIIIIIIGSSSSS</Text>
     </View>
     
     </>
