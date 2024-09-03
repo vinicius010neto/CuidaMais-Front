@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './src/screens/Home';
 import Appointments from './src/screens/Appointments';
-import Footer from './src/components/footer';
+
+import Login from './src/screens/Login';
 
 import Configs from './src/screens/Configs';
 
@@ -12,7 +13,12 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen 
+          name="Login" 
+          component={Login} 
+          options={{ headerShown: false }} 
+        />
         <Stack.Screen 
           name="Home" 
           component={Home} 
@@ -29,7 +35,6 @@ export default function App() {
           options={{ headerShown: false }} 
         />
       </Stack.Navigator>
-      <Footer />
     </NavigationContainer>
   );
 }

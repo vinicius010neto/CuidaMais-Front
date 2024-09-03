@@ -8,6 +8,7 @@ export default function AppointmentsScreen() {
     <View>
         <Text>teste</Text>
     </View>
+    <Footer />
     
     </>
   );

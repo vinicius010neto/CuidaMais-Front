@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'reac
 import { Ionicons, FontAwesome } from '@expo/vector-icons'; 
 import * as Calendar from 'expo-calendar';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import Footer from '../../components/footer';
 
 export default function HomeScreen() {
   const [compromisso, setCompromisso] = useState('');
@@ -154,6 +155,7 @@ export default function HomeScreen() {
 
         <StatusBar style="auto" />
       </View>
+      <Footer />
     </>
   );
 }
@@ -244,4 +246,5 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 15,
   },
+  
 });

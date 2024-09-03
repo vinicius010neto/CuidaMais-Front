@@ -2,8 +2,18 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function Login() {
+  const handleLogin = () => {
+    // Aqui você pode adicionar a lógica de validação de login
+    navigation.replace('Home'); // Redireciona para a Home e remove a tela de login da pilha
+  };
+
+  const navigation = useNavigation();
+
+  
   return (
     <View style={styles.container}>
       <Image source={require('../../assets/logo.png')} style={styles.logo} />
@@ -18,12 +28,12 @@ export default function Login() {
         placeholderTextColor="#aaa"
         secureTextEntry={true}
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Acessar</Text>
       </TouchableOpacity>
 
       {/* Botão de Logar com Google */}
-      <TouchableOpacity style={styles.googleButton}>
+      <TouchableOpacity style={styles.googleButton} onPress={handleLogin}>
         <FontAwesome name="google" size={20} color="#fff" />
         <Text style={styles.googleButtonText}>Logar com Google</Text>
       </TouchableOpacity>
