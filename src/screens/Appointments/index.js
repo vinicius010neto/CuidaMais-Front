@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Modal } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, TextInput, FlatList } from 'react-native';
 import Footer from '../../components/footer';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import EditAppointmentModal from '../../components/EditAppointmentModal';
+import FloatingAccessibilityButton from '../../components/FloatingAccessibilityButton';
 
 export default function AppointmentsScreen() {
   const [appointments, setAppointments] = useState([
@@ -26,6 +27,9 @@ export default function AppointmentsScreen() {
 
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const contentRef = useRef(null);
 
   const handleReschedule = (appointment) => {
     setSelectedAppointment(appointment);
@@ -60,41 +64,57 @@ export default function AppointmentsScreen() {
     setModalVisible(false);
   };
 
+  const filteredAppointments = appointments.filter((appointment) =>
+    appointment.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    appointment.location.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.header}>Meus Compromissos</Text>
-        {appointments.map((appointment) => (
-          <View key={appointment.id} style={styles.appointmentCard}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.title}>{appointment.title}</Text>
-              <Text style={styles.location}>{appointment.location}</Text>
-            </View>
-            <View style={styles.cardDetails}>
-              <View style={styles.detailRow}>
-                <FontAwesome name="calendar" size={18} color="#45c2a8" />
-                <Text style={styles.detailText}>{appointment.date}</Text>
-                <Ionicons name="time-outline" size={18} color="#45c2a8" />
-                <Text style={styles.detailText}>{appointment.time}</Text>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Pesquisar compromissos"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <FlatList
+          ref={contentRef} // Referência ao conteúdo
+          data={filteredAppointments}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item: appointment }) => (
+            <View key={appointment.id} style={styles.appointmentCard}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.title}>{appointment.title}</Text>
+                <Text style={styles.location}>{appointment.location}</Text>
               </View>
-              <Text style={styles.notes}>{appointment.notes}</Text>
+              <View style={styles.cardDetails}>
+                <View style={styles.detailRow}>
+                  <FontAwesome name="calendar" size={18} color="#45c2a8" />
+                  <Text style={styles.detailText}>{appointment.date}</Text>
+                  <Ionicons name="time-outline" size={18} color="#45c2a8" />
+                  <Text style={styles.detailText}>{appointment.time}</Text>
+                </View>
+                <Text style={styles.notes}>{appointment.notes}</Text>
+              </View>
+              <View style={styles.actionButtons}>
+                <TouchableOpacity
+                  style={styles.rescheduleButton}
+                  onPress={() => handleReschedule(appointment)}
+                >
+                  <Text style={styles.rescheduleButtonText}>Reagendar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={() => handleCancel(appointment.id)}
+                >
+                  <Text style={styles.cancelButtonText}>Cancelar</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.actionButtons}>
-              <TouchableOpacity
-                style={styles.rescheduleButton}
-                onPress={() => handleReschedule(appointment)}
-              >
-                <Text style={styles.rescheduleButtonText}>Reagendar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={() => handleCancel(appointment.id)}
-              >
-                <Text style={styles.cancelButtonText}>Cancelar</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ))}
+          )}
+        />
       </View>
 
       {selectedAppointment && (
@@ -105,6 +125,9 @@ export default function AppointmentsScreen() {
           onSave={updateAppointment}
         />
       )}
+
+      {/* Adicionando o botão de acessibilidade */}
+      <FloatingAccessibilityButton targetRef={contentRef} />
 
       <Footer />
     </>
@@ -123,6 +146,15 @@ const styles = StyleSheet.create({
     color: '#45c2a8',
     marginBottom: 20,
     alignSelf: 'center',
+  },
+  searchInput: {
+    height: 55,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    backgroundColor: '#e9e9e9',
   },
   appointmentCard: {
     backgroundColor: '#fff',
