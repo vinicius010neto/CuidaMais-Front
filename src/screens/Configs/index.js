@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Footer from '../../components/footer';
 import { useNavigation } from '@react-navigation/native';
+import FloatingAccessibilityButton from '../../components/FloatingAccessibilityButton';
 
 export default function ConfigsScreen() {
   const navigation = useNavigation();
@@ -81,7 +82,7 @@ export default function ConfigsScreen() {
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>
       </View>
-
+      <FloatingAccessibilityButton/>
       <Footer />
     </View>
   );
