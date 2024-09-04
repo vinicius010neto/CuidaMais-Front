@@ -51,10 +51,10 @@ export default function HomeScreen() {
         notes: descricao,
       });
 
-      Alert.alert('Sucesso', 'Compromisso adicionado ao Google Calendar!');
+      Alert.alert('Sucesso', 'Compromisso adicionado à agenda Google!');
     } catch (error) {
       console.error(error);
-      Alert.alert('Erro', 'Não foi possível adicionar o compromisso ao Google Calendar.');
+      Alert.alert('Erro', 'Não foi possível adicionar o compromisso à agenda Google.');
     }
   };
 
