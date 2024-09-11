@@ -18,10 +18,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.vinicius010neto.CuidaMais"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "937d9901-4235-4200-b0e9-8535468f4fe8"
+      }
     }
   }
 }
